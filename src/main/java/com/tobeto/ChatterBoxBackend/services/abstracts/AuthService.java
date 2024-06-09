@@ -1,13 +1,13 @@
 package com.tobeto.ChatterBoxBackend.services.abstracts;
 
-
-
+import com.tobeto.ChatterBoxBackend.core.utilities.results.Result;
 import com.tobeto.ChatterBoxBackend.services.dtos.user.requests.LoginRequest;
 import com.tobeto.ChatterBoxBackend.services.dtos.user.requests.RegisterUserRequest;
-import org.springframework.security.core.userdetails.UserDetailsService;
 
+public interface AuthService {
 
-public interface UserService extends UserDetailsService {
+    Result register(RegisterUserRequest request);
 
+    Result login(LoginRequest loginRequest);
 
 }

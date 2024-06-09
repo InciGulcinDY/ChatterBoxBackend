@@ -1,4 +1,4 @@
-package com.tobeto.ChatterBoxBackend.services.dtos.message.request;
+package com.tobeto.ChatterBoxBackend.services.dtos.user.requests;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DeleteMessageRequest {
+public class DeleteUserRequest {
 
     @NotNull
     @Positive(message = "The assigned value must not assume a negative numerical value!")

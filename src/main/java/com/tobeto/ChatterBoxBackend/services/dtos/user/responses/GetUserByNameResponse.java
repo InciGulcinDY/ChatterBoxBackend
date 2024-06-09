@@ -1,4 +1,4 @@
-package com.tobeto.ChatterBoxBackend.services.dtos.user.response;
+package com.tobeto.ChatterBoxBackend.services.dtos.user.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetAllUsersResponse {
+public class GetUserByNameResponse {
 
     private Integer id;
 
@@ -20,6 +20,5 @@ public class GetAllUsersResponse {
     private String lastname;
 
     private String image;
-
 
 }

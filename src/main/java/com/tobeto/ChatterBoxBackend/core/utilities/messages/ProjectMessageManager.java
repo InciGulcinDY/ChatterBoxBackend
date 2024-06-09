@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Locale;
 
+
 @Service
 @AllArgsConstructor
 public class ProjectMessageManager implements ProjectMessageService {
@@ -16,13 +17,13 @@ public class ProjectMessageManager implements ProjectMessageService {
     @Override
     public String getMessage(String keyword) {
         if (keyword == null) {
-            return "Geçersiz anahtar kelime";
+            return messageSource.getMessage("invalid.keyword", null, LocaleContextHolder.getLocale());
         }
-        return messageSource.getMessage(keyword, null, new Locale("en", "US"));
+        return messageSource.getMessage(keyword, null, LocaleContextHolder.getLocale());
     }
 
     @Override
     public String getMessageWithParams(String keyword, Object... params) {
-        return messageSource.getMessage(keyword,params, LocaleContextHolder.getLocale());
+        return messageSource.getMessage(keyword, params, LocaleContextHolder.getLocale());
     }
 }

@@ -1,4 +1,4 @@
-package com.tobeto.ChatterBoxBackend.services.dtos.message.request;
+package com.tobeto.ChatterBoxBackend.services.dtos.message.requests;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -9,16 +9,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
-import java.time.LocalDate;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpdateMessageRequest {
-
-    @NotNull
-    @Positive(message = "The assigned value must not assume a negative numerical value!")
-    private int id;
+public class AddMessageRequest {
 
     @NotBlank(message = "Message cannot be blank!")
     @Length(max = 300, message = "The message content cannot exceed 300 characters!")
@@ -33,8 +27,5 @@ public class UpdateMessageRequest {
     @NotNull
     @Positive(message = "The assigned value must not assume a negative numerical value!")
     private int recipientId;
-
-    @NotNull(message = "The read status must not be null!")
-    private boolean isRead;
 
 }

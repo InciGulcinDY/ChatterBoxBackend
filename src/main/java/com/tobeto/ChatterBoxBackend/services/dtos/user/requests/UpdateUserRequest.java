@@ -1,4 +1,4 @@
-package com.tobeto.ChatterBoxBackend.services.dtos.user.request;
+package com.tobeto.ChatterBoxBackend.services.dtos.user.requests;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -12,7 +12,11 @@ import org.hibernate.validator.constraints.Length;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddUserRequest {
+public class UpdateUserRequest {
+
+    @NotNull
+    @Positive(message = "The assigned value must not assume a negative numerical value!")
+    private int id;
 
     @NotBlank(message = "Registration is not possible without a username!")
     @Length(max = 30, message = "The username cannot exceed 30 characters!")

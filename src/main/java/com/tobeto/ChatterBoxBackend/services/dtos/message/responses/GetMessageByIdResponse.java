@@ -1,4 +1,4 @@
-package com.tobeto.ChatterBoxBackend.services.dtos.message.response;
+package com.tobeto.ChatterBoxBackend.services.dtos.message.responses;
 
 import com.tobeto.ChatterBoxBackend.entities.concretes.User;
 import lombok.AllArgsConstructor;

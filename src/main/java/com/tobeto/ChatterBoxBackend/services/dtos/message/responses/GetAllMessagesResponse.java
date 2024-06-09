@@ -1,7 +1,6 @@
-package com.tobeto.ChatterBoxBackend.services.dtos.message.response;
+package com.tobeto.ChatterBoxBackend.services.dtos.message.responses;
 
-import com.tobeto.ChatterBoxBackend.entities.concretes.User;
-import com.tobeto.ChatterBoxBackend.services.dtos.user.response.GetUserByIdResponse;
+import com.tobeto.ChatterBoxBackend.services.dtos.user.responses.GetUserByIdResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

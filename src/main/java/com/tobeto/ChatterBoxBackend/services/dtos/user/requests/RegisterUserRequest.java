@@ -1,22 +1,19 @@
-package com.tobeto.ChatterBoxBackend.services.dtos.user.request;
+package com.tobeto.ChatterBoxBackend.services.dtos.user.requests;
 
+import com.tobeto.ChatterBoxBackend.entities.concretes.Role;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpdateUserRequest {
-
-    @NotNull
-    @Positive(message = "The assigned value must not assume a negative numerical value!")
-    private int id;
+public class RegisterUserRequest {
 
     @NotBlank(message = "Registration is not possible without a username!")
     @Length(max = 30, message = "The username cannot exceed 30 characters!")
@@ -49,5 +46,7 @@ public class UpdateUserRequest {
 
     @NotBlank(message = "Registration is not possible without a password!")
     private String password;
+
+    private List<Role> roles;
 
 }
