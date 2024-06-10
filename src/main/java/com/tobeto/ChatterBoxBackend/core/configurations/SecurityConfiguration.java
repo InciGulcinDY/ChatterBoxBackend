@@ -21,12 +21,28 @@ public class SecurityConfiguration {
     private final PasswordEncoder passwordEncoder;
     private final UserDetailsService userService;
 
+    private static final String[] WHITE_LIST_URLS = {
+            "/swagger-ui/**",
+            "/v2/api-docs",
+            "/v3/api-docs",
+            "/v3/api-docs/**",
+            "api/users/**",
+            "api/messages/**",
+    };
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
         httpSecurity
                 .csrf(AbstractHttpConfigurer:: disable)
                 .authorizeHttpRequests(x -> x
-                        .requestMatchers(HttpMethod.POST, "/api/user/**").permitAll()
+                        .requestMatchers(WHITE_LIST_URLS).permitAll()
+                        //  Post Methods
+                        //.requestMatchers(HttpMethod.POST, "/api/users/**").permitAll()
+                        //.requestMatchers(HttpMethod.POST,"/api/messages/**").authenticated()
+
+                        //  Get Methods
+                        //.requestMatchers(HttpMethod.GET, "/api/messages/**").permitAll()
+
                         .anyRequest().authenticated());
         return httpSecurity.build();
     }
