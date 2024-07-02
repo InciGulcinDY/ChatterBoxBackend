@@ -28,7 +28,7 @@ public class UserBusinessRule {
     }
 
     public void existsUserByUserName(String userName) {
-        if(userRepository.existsUserByUserName(userName)) {
+        if(userRepository.existsUserByUsername(userName)) {
             throw new BusinessException(
                     (projectMessageService.getMessage(Messages.User.getUserUsernameAlreadyExistsMessage)));
         }

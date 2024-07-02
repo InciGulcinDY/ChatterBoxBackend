@@ -16,4 +16,5 @@ public class AuthCResult extends Result {
         super(success, message);
         this.loginResponse = loginResponse;
     }
+
 }

@@ -19,7 +19,7 @@ import java.util.List;
 public class User extends BasicEntity implements UserDetails {
 
     @Column(name = "user_name")
-    private String userName;
+    private String username;
 
     @Column(name = "email")
     private String email;
@@ -36,16 +36,21 @@ public class User extends BasicEntity implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    @OneToMany(mappedBy = "recipient")
-    private List<Message> receivedMessages;
-
-    @OneToMany(mappedBy = "sender")
-    private List<Message> sentMessages;
-
     @JoinTable(name = "roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private List<Role> authorities;
+
+    @JoinTable(name = "status", joinColumns = @JoinColumn(name = "status_id"))
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
+    @OneToMany(mappedBy = "recipient")
+    private List<ChatMessage> receivedChatMessages;
+
+    @OneToMany(mappedBy = "sender")
+    private List<ChatMessage> sentChatMessages;
 
 
     @PrePersist

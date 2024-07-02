@@ -1,6 +1,6 @@
 package com.tobeto.ChatterBoxBackend.repositories;
 
-import com.tobeto.ChatterBoxBackend.entities.concretes.Message;
+import com.tobeto.ChatterBoxBackend.entities.concretes.ChatMessage;
 import com.tobeto.ChatterBoxBackend.services.dtos.message.responses.GetAllMessagesResponse;
 import com.tobeto.ChatterBoxBackend.services.dtos.user.responses.GetAllUsersResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,8 +9,10 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface MessageRepository extends JpaRepository<Message, Integer> {
+public interface ChatMessageRepository extends JpaRepository<ChatMessage, Integer> {
+    List<ChatMessage> findChatMessageByRoom(String room);
 
+    /*
     //  JPQL METHODS:
     @Query("select new com.tobeto.ChatterBoxBackend.services.dtos.message.responses.GetAllMessagesResponse(" +
             "m.id, m.content, " +
@@ -75,5 +77,5 @@ public interface MessageRepository extends JpaRepository<Message, Integer> {
             "WHERE m.recipient.id = :userId AND m.isRead = false " +
             "GROUP BY m.sender.id")
     List<Object[]> findUnreadMessageCountsByUserId(@Param("userId") int userId);
-
+*/
 }

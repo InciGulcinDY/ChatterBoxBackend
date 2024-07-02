@@ -6,17 +6,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Entity
-@Table(name = "messages")
+@Table(name = "chat_messages")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Message extends BasicEntity {
+public class ChatMessage extends BasicEntity {
 
     @Column(name = "content")
     private String content;
+
+    @Column(name = "room")
+    private String room;
 
     @ManyToOne
     @JoinColumn(name = "sender_id")
@@ -26,7 +27,7 @@ public class Message extends BasicEntity {
     @JoinColumn(name = "recipient_id")
     private User recipient;
 
-    @Column(name = "is_read")
-    private boolean isRead;
+    @Enumerated(EnumType.STRING)
+    private MessageType messageType;
 
 }

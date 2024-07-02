@@ -16,12 +16,6 @@ public abstract class BasicEntity {
     @Column(name = "created_date")
     private LocalDate createdDate;
 
-    @Column(name = "updated_date", nullable = true)
-    private LocalDate updatedDate;
-
-    @Column(name = "deleted_date", nullable = true)
-    private LocalDate deletedDate;
-
 
 
     @PrePersist
@@ -29,11 +23,5 @@ public abstract class BasicEntity {
         createdDate = LocalDate.now();
     }
 
-    @PreUpdate
-    private void beforeUpdate() {
-        updatedDate = LocalDate.now();
-    }
 
-    @PreRemove
-    private void beforeDelete(){deletedDate = LocalDate.now();}
 }

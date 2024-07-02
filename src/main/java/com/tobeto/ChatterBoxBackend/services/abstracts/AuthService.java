@@ -10,4 +10,6 @@ public interface AuthService {
 
     Result login(LoginRequest loginRequest);
 
+    Result logout(String username);
+
 }

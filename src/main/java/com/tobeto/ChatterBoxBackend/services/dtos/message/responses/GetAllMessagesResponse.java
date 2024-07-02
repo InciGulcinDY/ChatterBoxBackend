@@ -16,11 +16,11 @@ public class GetAllMessagesResponse {
 
     private String content;
 
+    private String room;
+
     private GetUserByIdResponse sender;
 
     private GetUserByIdResponse recipient;
-
-    private boolean isRead;
 
     private LocalDate createdDate;
 

@@ -7,6 +7,7 @@ import com.tobeto.ChatterBoxBackend.core.utilities.results.Result;
 import com.tobeto.ChatterBoxBackend.core.utilities.results.authentication.AuthCResult;
 import com.tobeto.ChatterBoxBackend.core.utilities.results.authentication.LoginResponse;
 import com.tobeto.ChatterBoxBackend.core.utilities.results.results.SuccessResult;
+import com.tobeto.ChatterBoxBackend.entities.concretes.Status;
 import com.tobeto.ChatterBoxBackend.entities.concretes.User;
 import com.tobeto.ChatterBoxBackend.repositories.UserRepository;
 import com.tobeto.ChatterBoxBackend.services.abstracts.AuthService;
@@ -45,6 +46,7 @@ public class AuthManager implements AuthService {
 
         //   Mapping:
         User user = this.modelMapperService.forRequest().map(request, User.class);
+        user.setStatus(Status.ONLINE);
 
         //  Saving to DB:
         this.userRepository.save(user);
@@ -59,14 +61,29 @@ public class AuthManager implements AuthService {
                 new UsernamePasswordAuthenticationToken(loginRequest.getUserName(), loginRequest.getPassword()));
 
         //  Finding the relevant user
-        User user = userRepository.findByUserName(loginRequest.getUserName())
+        User user = userRepository.findByUsername(loginRequest.getUserName())
                 .orElseThrow();
+        user.setStatus(Status.ONLINE);
 
         //  After successful authentication, generates Token
         String token = jwtService.generateToken(user);
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setToken(token);
-        return new AuthCResult(true, projectMessageManager.getMessage(Messages.User.userLoginSuccess), loginResponse);
+        return new AuthCResult(true, projectMessageManager
+                .getMessage(Messages.User.userLoginSuccess), loginResponse);
+
+    }
+
+    @Override
+    public Result logout(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(()->new RuntimeException(this.projectMessageManager
+                        .getMessage(Messages.User.getUserNotFoundMessage)));
+
+        user.setStatus(Status.OFFLINE);
+        this.userRepository.save(user);
+
+        return new SuccessResult((projectMessageManager.getMessage(Messages.User.userLogoutSuccess)));
 
     }
 
