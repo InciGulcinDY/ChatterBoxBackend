@@ -1,6 +1,7 @@
 package com.tobeto.ChatterBoxBackend.controllers;
 
 import com.tobeto.ChatterBoxBackend.services.abstracts.ChatMessagesService;
+import com.tobeto.ChatterBoxBackend.services.dtos.message.responses.GetAllMessageRoomsResponse;
 import com.tobeto.ChatterBoxBackend.services.dtos.message.responses.GetAllMessagesResponse;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,11 @@ public class ChatMessageController {
     @GetMapping("/{room}")
     public List<GetAllMessagesResponse> getAllMessages(@PathVariable String room) {
         return this.chatMessagesService.getAllMessages(room);
+    }
+
+    @GetMapping("/rooms/{userId}")
+    public List<GetAllMessageRoomsResponse> getAllMessageRooms(@PathVariable int userId) {
+        return this.chatMessagesService.getAllMessageRooms(userId);
     }
 
 }

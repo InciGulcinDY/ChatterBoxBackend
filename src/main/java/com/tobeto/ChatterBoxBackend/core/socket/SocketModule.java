@@ -1,12 +1,11 @@
 package com.tobeto.ChatterBoxBackend.core.socket;
 
-
-import com.corundumstudio.socketio.Configuration;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.listener.ConnectListener;
 import com.corundumstudio.socketio.listener.DataListener;
 import com.corundumstudio.socketio.listener.DisconnectListener;
-import com.tobeto.ChatterBoxBackend.services.dtos.message.MessageModel;
+import com.tobeto.ChatterBoxBackend.core.services.SocketService;
+import com.tobeto.ChatterBoxBackend.services.dtos.message.SaveMessageModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -15,12 +14,14 @@ import org.springframework.stereotype.Component;
 public class SocketModule {
 
     private final SocketIOServer socketIOServer;
+    private final SocketService socketService;
 
-    public SocketModule(SocketIOServer socketIOServer) {
+    public SocketModule(SocketIOServer socketIOServer, SocketService socketService) {
         this.socketIOServer = socketIOServer;
+        this.socketService = socketService;
         socketIOServer.addConnectListener(onConnected());
         socketIOServer.addDisconnectListener(onDisconnected());
-        socketIOServer.addEventListener("send_message", MessageModel.class, onMessageReceived());
+        socketIOServer.addEventListener("send_message", SaveMessageModel.class, onMessageReceived());
     }
 
     private ConnectListener onConnected(){
@@ -36,26 +37,32 @@ public class SocketModule {
 
     private DisconnectListener onDisconnected(){
         return socketIOClient -> {
-            String room = socketIOClient.getHandshakeData().getSingleUrlParam("room");
+
+            System.out.println("Client disconnected: " + socketIOClient.getSessionId());
+
+           /* String room = socketIOClient.getHandshakeData().getSingleUrlParam("room");
             socketIOClient.getNamespace().getRoomOperations(room)
                     .sendEvent("get_message",
-                            String.format("%s disconnected to -> %s", socketIOClient.getSessionId(), room));
+                            String.format("%s disconnected to -> %s", socketIOClient.getSessionId(), room));*/
             log.info(String.format("SocketID: %s disconnected", socketIOClient.getSessionId().toString()));
         };
     }
 
-    private DataListener<MessageModel> onMessageReceived(){
+    private DataListener<SaveMessageModel> onMessageReceived(){
         return (senderClient, data, ackSender)->{
           log.info(String.format("%s -> %s", senderClient.getSessionId(), data.getContent()));
           String room = senderClient.getHandshakeData().getSingleUrlParam("room");
-          senderClient.getNamespace().getRoomOperations(room).getClients().forEach(
+          System.out.println("Data Listener saveMessage");
+          socketService.saveMessage(senderClient, data);
+
+         /* senderClient.getNamespace().getRoomOperations(room).getClients().forEach(
                   socketIOClient -> {
                       //    Preventing getting the sending message back
                       if(!socketIOClient.getSessionId().equals(senderClient.getSessionId())){
                           socketIOClient.sendEvent("get_message", data.getContent());
                       }
                   }
-          );
+          );*/
         };
     }
 }

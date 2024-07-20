@@ -19,6 +19,9 @@ public class ChatMessage extends BasicEntity {
     @Column(name = "room")
     private String room;
 
+    @Column(name = "is_read")
+    private boolean isRead;
+
     @ManyToOne
     @JoinColumn(name = "sender_id")
     private User sender;

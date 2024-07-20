@@ -13,5 +13,11 @@ public class StartupConfiguration implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         socketIOServer.start();
+
+       /* Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            System.out.println("Stopping SocketIOServer...");
+            socketIOServer.stop();
+        }));*/
+
     }
 }

@@ -18,7 +18,7 @@ public class SocketService {
     private final ChatMessagesService chatMessagesService;
     private final ModelMapperService modelMapperService;
 
-    public <T> void sendSocketMessage(SocketIOClient senderClient, T message, String room) {
+    private <T> void sendSocketMessage(SocketIOClient senderClient, T message, String room) {
         for (
                 SocketIOClient client : senderClient.getNamespace().getRoomOperations(room).getClients()) {
             if (!client.getSessionId().equals(senderClient.getSessionId())) {
@@ -28,12 +28,12 @@ public class SocketService {
         }
     }
 
-    public void saveMessage(SocketIOClient senderClient, ChatMessage chatMessage) {
-        SaveMessageModel storedMessage = this.modelMapperService.forRequest().map(chatMessage, SaveMessageModel.class);
+    public void saveMessage(SocketIOClient senderClient, SaveMessageModel messageModel) {
+        //SaveMessageModel storedMessage = this.modelMapperService.forRequest().map(chatMessage, SaveMessageModel.class);
 
-        this.chatMessagesService.saveMessage(storedMessage);
-
-        sendSocketMessage(senderClient, storedMessage, chatMessage.getRoom());
+        this.chatMessagesService.saveMessage(messageModel);
+        System.out.println("Socket service saveMessage");
+        sendSocketMessage(senderClient, messageModel, messageModel.getRoom());
     }
 
     public void saveInfoMessage(SocketIOClient socketIOClient, String messageContent, String room) {

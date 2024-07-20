@@ -16,8 +16,10 @@ public class SocketIOConfiguration {
     @Bean
     public SocketIOServer socketIOServer(){
         com.corundumstudio.socketio.Configuration config = new com.corundumstudio.socketio.Configuration();
-        config.setHostname(host);;
+        config.setHostname(host);
         config.setPort(port);
+        //config.setPingTimeout(60000); // 60 seconds
+        //config.setPingInterval(25000); // 25 seconds
 
         return new SocketIOServer(config);
     }
